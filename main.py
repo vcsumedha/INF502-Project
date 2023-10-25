@@ -1,60 +1,84 @@
 
 #length is the minimum length of seq1 or seq2 after shifting either of them (and inserting "-" in the shifted cells)
-def find_match(seq1,seq2,length):
-    
+
+def print_stat(seq1, seq2, score, comparison, shift):
+    print('')
+    print(f'For Shift: {shift}')  
+    print('')
+    print('    '.join(seq1))
+    print('    '.join(seq2))
+    print('    '.join(comparison))
+    print('')
+    print(f'Score: {score}')
+    print('')
+
+def find_match(seq1,seq2,length, shift):  #shift is only for printing
+    comparison = ''
     match = 0
+
     for i in range(0,length):
         if seq1[i] == seq2[i]:
             match += 1
+            comparison += seq1[i]
+        else:
+            comparison += ' '
 
+    print_stat(seq1,seq2,match,comparison,shift)
     return match
 
 #length is the minimum length of seq1 or seq2 after shifting either of them (and inserting "-" in the shifted cells)
-def find_chain(seq1,seq2,length):
+def find_chain(seq1,seq2,length, shift):
     
     longest_chain = 0
     match = 0
+
+    chain_start_idx = 0
+    
     for i in range(0,length):
         if seq1[i] == seq2[i]:
             match += 1
-            longest_chain = max(longest_chain, match)
+            if match > longest_chain:
+                chain_start_idx = i-match+1
+                longest_chain = match
         else:
             match = 0
 
+    comparison = ' ' * chain_start_idx + seq1[chain_start_idx : chain_start_idx+longest_chain]
+    print_stat(seq1,seq2,longest_chain,comparison,shift)
     return longest_chain
 
 def find_match_by_shifting_seq1(seq1, seq2, max_shift, min_shift = 0, chain = False):
     max_score = 0
     for shift in range(min_shift,max_shift+1):
-        shifted_seq1 = '-' * shift + seq1
+        shifted_seq1 = ' ' * shift + seq1
 
         smaller_length = min(len(shifted_seq1), len(seq2))
         
         #chain or subsequence?
         if chain:
-            score = find_chain(shifted_seq1,seq2,smaller_length)    
+            score = find_chain(shifted_seq1,seq2,smaller_length, shift)    
         else:
-            score = find_match(shifted_seq1,seq2,smaller_length)
+            score = find_match(shifted_seq1,seq2,smaller_length, shift)
         max_score = max(max_score, score)
 
-        print(f'For shift {shift}, score: {score}')
+        #print(f'For shift {shift}, score: {score}')
     return max_score
 
 def find_match_by_shifting_seq2(seq1, seq2, max_shift, min_shift = 0, chain = False):
     max_score = 0
     for shift in range(min_shift,max_shift+1):
-        shifted_seq2 = "-" * shift + seq2
+        shifted_seq2 = " " * shift + seq2
 
         smaller_length = min(len(shifted_seq2), len(seq1))
         
         #chain or subsequence?
         if chain:
-            score = find_chain(shifted_seq2,seq1,smaller_length)
+            score = find_chain(seq2, shifted_seq2,smaller_length, shift)
         else:
-            score = find_match(shifted_seq2,seq1,smaller_length)
+            score = find_match(seq1, shifted_seq2,smaller_length, shift)
         max_score = max(max_score, score)
 
-        print(f'For shift {shift}, score: {score}')
+        #print(f'For shift {shift}, score: {score}')
     return max_score
 
 def file_input():
@@ -127,7 +151,7 @@ def menu():
 def main():
     max_shift, sequence_one, sequence_two = menu()
     
-    print("The pair of sequencesclear:")
+    print("The pair of sequences:")
     print(sequence_one)
     print(sequence_two)
     print("---------------------")
