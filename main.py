@@ -1,5 +1,5 @@
 
-
+#prints the highest match or logest chain score
 def print_stat(seq1, seq2, score, comparison, shift, chain=False):
     print('')
     print(f'For Shift: {shift}')  
@@ -50,6 +50,7 @@ def find_chain(seq1,seq2,length, shift):
     print_stat(seq1,seq2,longest_chain,comparison,shift, chain=True)
     return longest_chain
 
+#checks for matches after shifting the sequence 1 and returns max score after finding the shifts
 def find_match_by_shifting_seq1(seq1, seq2, max_shift, min_shift = 0, chain = False):
     max_score = 0
     for shift in range(min_shift,max_shift+1):
@@ -67,6 +68,7 @@ def find_match_by_shifting_seq1(seq1, seq2, max_shift, min_shift = 0, chain = Fa
         #print(f'For shift {shift}, score: {score}')
     return max_score
 
+#checks for matches after shifting the sequence 1 and returns max score after finding the shifts
 def find_match_by_shifting_seq2(seq1, seq2, max_shift, min_shift = 0, chain = False):
     max_score = 0
     for shift in range(min_shift,max_shift+1):
