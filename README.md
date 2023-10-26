@@ -3,7 +3,7 @@
 ## Table of Contents
 
 -   [Features](#features)
--   [Implmentation](#implmentation)
+-   [Implementation](#implementation)
 	-   [Input](#input)
 	-   [Shifting Sequences](#shift)
 	-   [Finding highest matches](#match)
@@ -11,7 +11,7 @@
 	-   [Exception Handling](#exception)
 -   [Usage](#usage)
 
-## Features {#features}
+## Features
 
 -   Find the highest no. of pair wise nucleotide matches of two DNA sequences
 -   Find the longest contiguous chain of pair wise nucleotide matches of two DNA sequences
@@ -20,7 +20,7 @@
 
 ## Implementation
 
-### Input {#input}
+### Input 
 
 There are two way to input the DNA sequences.
 
