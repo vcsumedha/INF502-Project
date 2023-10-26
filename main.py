@@ -1,5 +1,4 @@
 
-#length is the minimum length of seq1 or seq2 after shifting either of them (and inserting "-" in the shifted cells)
 
 def print_stat(seq1, seq2, score, comparison, shift, chain=False):
     print('')
@@ -15,6 +14,7 @@ def print_stat(seq1, seq2, score, comparison, shift, chain=False):
         print(f'Score (highest matches): {score}')
     print('')
 
+#length is the minimum length of seq1 or seq2 after shifting either of them (and inserting " " in the shifted cells)
 def find_match(seq1,seq2,length, shift):  #shift is only for printing
     comparison = ''
     match = 0
@@ -29,7 +29,7 @@ def find_match(seq1,seq2,length, shift):  #shift is only for printing
     print_stat(seq1,seq2,match,comparison,shift)
     return match
 
-#length is the minimum length of seq1 or seq2 after shifting either of them (and inserting "-" in the shifted cells)
+#length is the minimum length of seq1 or seq2 after shifting either of them (and inserting " " in the shifted cells)
 def find_chain(seq1,seq2,length, shift):
     
     longest_chain = 0
@@ -88,19 +88,30 @@ def file_input():
     sequence_one = ''
     sequence_two = ''
 
-    while len(sequence_one) == 0 or len(sequence_two) == 0:
+    while len(sequence_one) == 0:
         print('')
-        file_name = input("Please input the filename (that contains the two sequences in two lines): ")
-        file_name.strip() #strip trailing and leading whitespaces
+        
+        file_seq1 = input("File name containing sequence one: ")
+        file_seq1.strip() #strip trailing and leading whitespaces
 
         try:
-            with open(file_name,"r") as file:
+            with open(file_seq1,"r") as file:
                 lines = file.readlines()
                 sequence_one = lines[0][:-1] #trim the new line
-                sequence_two = lines[1][:-1] #trim the new line
                 #find_match_by_shifting_seq2(sequence_one,sequence_two,max_shift,chain=True)
         except FileNotFoundError:
-            print(f"The file {file_name} doesn't exist!")
+            print(f"The file {file_seq1} doesn't exist!")
+
+    while len(sequence_two) == 0:
+        file_seq2 = input("File name containing sequence two: ")
+        file_seq2.strip() #strip trailing and leading whitespaces
+        try:
+            with open(file_seq2,"r") as file:
+                lines = file.readlines()
+                sequence_two = lines[0][:-1] #trim the new line
+                #find_match_by_shifting_seq2(sequence_one,sequence_two,max_shift,chain=True)
+        except FileNotFoundError:
+            print(f"The file {file_seq2} doesn't exist!")
 
     print('')
     return sequence_one, sequence_two
@@ -114,7 +125,7 @@ def console_input():
     return sequence_1, sequence_2
 
 def menu():
-    print("Hello! Welcome to DNA Sequence Matching Program :-)")
+    print("Hello! Welcome to DNA Sequence Matching Program :-)\n")
     print("First, start by entering the maximum no. of shifts you would want the sequences to have.")
     print('')
 
@@ -130,7 +141,7 @@ def menu():
         
     
     print('')
-    print("Now, let me know How do you want to input the pair of sequence?")
+    print("Now, how do you want to input the pair of sequence?")
     print('')
 
     input_choice = -1
@@ -154,11 +165,16 @@ def menu():
 def main():
     max_shift, sequence_one, sequence_two = menu()
     
+    print("---------------------------")
     print("The pair of sequences:")
     print(sequence_one)
     print(sequence_two)
-    print("---------------------")
+    print("---------------------------")
 
+
+    print('')
+    print('Trying to find pairwise alignments without any shifting')
+    print('')
 
     #Calculate and print back the count of matches without any shifts done as well as if there is any chained sequences present (display them seperatly)
     no_shift_match = find_match_by_shifting_seq1(sequence_one, sequence_two, max_shift=0)
@@ -171,10 +187,13 @@ def main():
 
     #Calculate and print back the chain after shifts done with maximum score from sequences
     
+    print('')
+    print('Trying to find pairwise alignments with shifting')
+    print('')
+
     shift_seq1_match = find_match_by_shifting_seq1(sequence_one, sequence_two, max_shift= max_shift, min_shift=1)
     shift_seq2_match = find_match_by_shifting_seq2(sequence_one, sequence_two, max_shift= max_shift, min_shift=1)
     max_match = max(shift_seq1_match, shift_seq2_match)
-
 
     #Calculate and print back the maximum contiguous chain (after shifts done ) from sequences
     shift_seq1_chain = find_match_by_shifting_seq1(sequence_one, sequence_two, max_shift= max_shift, min_shift=1, chain=True)
@@ -182,7 +201,7 @@ def main():
     longest_chain = max(shift_seq1_chain, shift_seq2_chain)
 
     print('')
-    print(f'Highest no. of match across all possible shifting: {max_shift}')
+    print(f'Highest no. of match across all possible shifting: {max_match}')
     print(f'Length of longest contiguous chain across all posibble shifting: {longest_chain}')
     print('')
 
