@@ -1,15 +1,18 @@
 
 #length is the minimum length of seq1 or seq2 after shifting either of them (and inserting "-" in the shifted cells)
 
-def print_stat(seq1, seq2, score, comparison, shift):
+def print_stat(seq1, seq2, score, comparison, shift, chain=False):
     print('')
     print(f'For Shift: {shift}')  
-    print('')
-    print('    '.join(seq1))
-    print('    '.join(seq2))
-    print('    '.join(comparison))
-    print('')
-    print(f'Score: {score}')
+    #print('')
+    print('  '.join(seq1))
+    print('  '.join(seq2))
+    print('  '.join(comparison))
+    #print('')
+    if chain:
+        print(f'Score (longest chain): {score}')
+    else:
+        print(f'Score (highest matches): {score}')
     print('')
 
 def find_match(seq1,seq2,length, shift):  #shift is only for printing
@@ -44,7 +47,7 @@ def find_chain(seq1,seq2,length, shift):
             match = 0
 
     comparison = ' ' * chain_start_idx + seq1[chain_start_idx : chain_start_idx+longest_chain]
-    print_stat(seq1,seq2,longest_chain,comparison,shift)
+    print_stat(seq1,seq2,longest_chain,comparison,shift, chain=True)
     return longest_chain
 
 def find_match_by_shifting_seq1(seq1, seq2, max_shift, min_shift = 0, chain = False):
@@ -172,10 +175,6 @@ def main():
     shift_seq2_match = find_match_by_shifting_seq2(sequence_one, sequence_two, max_shift= max_shift, min_shift=1)
     max_match = max(shift_seq1_match, shift_seq2_match)
 
-    print('')
-    print(f'Highest no. of match across all possible shifting: {max_shift}')
-    print('')
-
 
     #Calculate and print back the maximum contiguous chain (after shifts done ) from sequences
     shift_seq1_chain = find_match_by_shifting_seq1(sequence_one, sequence_two, max_shift= max_shift, min_shift=1, chain=True)
@@ -183,6 +182,8 @@ def main():
     longest_chain = max(shift_seq1_chain, shift_seq2_chain)
 
     print('')
+    print(f'Highest no. of match across all possible shifting: {max_shift}')
     print(f'Length of longest contiguous chain across all posibble shifting: {longest_chain}')
-    
+    print('')
+
 main()
