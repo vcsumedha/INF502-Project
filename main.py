@@ -76,7 +76,7 @@ def find_match_by_shifting_seq2(seq1, seq2, max_shift, min_shift = 0, chain = Fa
         
         #chain or subsequence?
         if chain:
-            score = find_chain(seq2, shifted_seq2,smaller_length, shift)
+            score = find_chain(seq1, shifted_seq2,smaller_length, shift)
         else:
             score = find_match(seq1, shifted_seq2,smaller_length, shift)
         max_score = max(max_score, score)
@@ -124,12 +124,12 @@ def console_input():
     while sequence_1 == '':
         sequence_1 = input("Enter the first sequence: ").strip()
         if sequence_1 == '':
-            print('Sequence must have atleast one neucleotyde')
+            print('Sequence must have atleast one nucleotide')
 
     while sequence_2 == '':
         sequence_2 = input("Enter the second sequence: ").strip()
         if sequence_2== '':
-            print('Sequence must have atleast one neucleotyde')
+            print('Sequence must have atleast one nucleotide')
     print('')
 
     return sequence_1, sequence_2
@@ -178,7 +178,7 @@ def menu():
                 print(f'Max shift is set to {max_shift}')
         except ValueError:
             print('Max shift count must be an integer number!')       
-    
+    print('')
 
     return max_shift, sequence1, sequence2
 
