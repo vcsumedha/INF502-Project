@@ -1,29 +1,27 @@
 # INF502 Project: DNA Sequence Matching {#inf502-project-dna-sequence-matching}
 
-## Table of Contents {#table-of-contents}
+Table of Contents
+- [INF502 Project: DNA Sequence Matching {#inf502-project-dna-sequence-matching}](#inf502-project-dna-sequence-matching-inf502-project-dna-sequence-matching)
+	- [Features](#features)
+	- [Implementation](#implementation)
+		- [Input](#input)
+		- [Implementing Shift of the DNA Sequence](#implementing-shift-of-the-dna-sequence)
+		- [Finding highest no. of matches across diferent shifts](#finding-highest-no-of-matches-across-diferent-shifts)
+		- [Finding longest contiguous chain across diferent shifts](#finding-longest-contiguous-chain-across-diferent-shifts)
+		- [Exception Handling](#exception-handling)
+	- [Usage](#usage)
+	- [Example](#example)
 
--   [INF502 Project: DNA Sequence Matching](#inf502-project-dna-sequence-matching)
-    -   [Table of Contents](#table-of-contents)
-    -   [Features](#features)
-    -   [Implementation](#implementation)
-        -   [Input](#input)
-        -   [Implementing Shift of the DNA Sequence](#implementing-shift-of-the-dna-sequence)
-        -   [Finding highest no. of matches across diferent shifts](#finding-highest-no-of-matches-across-diferent-shifts)
-        -   [Finding longest contiguous chain across diferent shifts](#finding-longest-contiguous-chain-across-diferent-shifts)
-        -   [Exception Handling](#exception-handling)
-    -   [Usage](#usage)
-    -   [Example](#example)
-
-## Features {#features}
+## Features 
 
 -   Find the highest no. of pair wise nucleotide matches of two DNA sequences
 -   Find the longest contiguous chain of pair wise nucleotide matches of two DNA sequences
 -   File/Console Input
 -   Interactive Menu
 
-## Implementation {#implementation}
+## Implementation
 
-### Input {#input}
+### Input 
 
 There are two way to input the DNA sequences.
 
@@ -32,7 +30,7 @@ There are two way to input the DNA sequences.
 
 In the case of file input, user has to provide the name of the files through console (the files must be residing in the same folder, else the relative paths has to be provided.). User then has to provide the maximum no. of shifts allowed for each of the sequences.
 
-### Implementing Shift of the DNA Sequence {#implementing-shift-of-the-dna-sequence}
+### Implementing Shift of the DNA Sequence 
 
 To implement a shift of size k, we just appended k whitespaces infront of the sequence.
 
@@ -55,7 +53,7 @@ The steps to find the higest no. of matches by shifting sequence1:
 
 The same steps were repeated for sequence 2. We measure and report the max_score across all posible shifting.
 
-### Finding longest contiguous chain across diferent shifts {#finding-longest-contiguous-chain-across-diferent-shifts}
+### Finding longest contiguous chain across diferent shifts
 
 The steps to find the longest contiguous chain by shifting sequence1:
 
@@ -69,12 +67,12 @@ The steps to find the longest contiguous chain by shifting sequence1:
 
 The same steps were repeated for sequence 2. We measure and report the longest_chain across all posible shifting.
 
-### Exception Handling {#exception-handling}
+### Exception Handling
 
 -   When working with file input, if there exists no file with the name the user has provided, a *FileNotFoundError* exception is handled and the user is asked to provided the correct filename again.
 -   When taking user input for the maximum shift count, if the provided value is not a number, a *ValueError* exception handled and the user is asked again to provide a number for the max shift.
 
-## Usage {#usage}
+## Usage
 
 Just run the main.py file to get started
 
@@ -84,7 +82,7 @@ python3 main.py
 
 It will start an interactive menu. After providing the input and max shift count, the program will display the result for various combinations of shifting of the DNA sequences.
 
-## Example {#example}
+## Example
 
 ```         
 $ python3 main.py 
