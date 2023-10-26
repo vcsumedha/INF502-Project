@@ -78,7 +78,7 @@ def find_match_by_shifting_seq2(seq1, seq2, max_shift, min_shift = 0, chain = Fa
         
         #chain or subsequence?
         if chain:
-            score = find_chain(seq2, shifted_seq2,smaller_length, shift)
+            score = find_chain(seq1, shifted_seq2,smaller_length, shift)
         else:
             score = find_match(seq1, shifted_seq2,smaller_length, shift)
         max_score = max(max_score, score)
@@ -119,31 +119,28 @@ def file_input():
     return sequence_one, sequence_two
 
 def console_input():
+    sequence_1 = ''
+    sequence_2 = ''
+
     print('')
-    sequence_1 = input("Enter the first sequence: ")
-    sequence_2 = input("Enter the second sequence: ")
+    while sequence_1 == '':
+        sequence_1 = input("Enter the first sequence: ").strip()
+        if sequence_1 == '':
+            print('Sequence must have atleast one nucleotide')
+
+    while sequence_2 == '':
+        sequence_2 = input("Enter the second sequence: ").strip()
+        if sequence_2== '':
+            print('Sequence must have atleast one nucleotide')
     print('')
 
     return sequence_1, sequence_2
 
 def menu():
-    print("Hello! Welcome to DNA Sequence Matching Program :-)\n")
-    print("First, start by entering the maximum no. of shifts you would want the sequences to have.")
-    print('')
-
-    max_shift = -1
-
-    while max_shift < 0:
-        try:
-            max_shift = int(input("Enter a positive number of your choice as the maximum shift: "))
-            if max_shift <= 0:
-                print('Max shift count must be positive!')
-        except ValueError:
-            print('Max shift count must be an integer number!')       
-        
+    print("Hello! Welcome to DNA Sequence Matching Program :-)")    
     
     print('')
-    print("Now, how do you want to input the pair of sequence?")
+    print("How do you want to input the pair of sequence?")
     print('')
 
     input_choice = -1
@@ -156,11 +153,34 @@ def menu():
         except ValueError:
             print('Entered value is not an integer number!')       
 
-
     if input_choice == 1:
         sequence1, sequence2 = console_input() 
     else:
         sequence1, sequence2 = file_input()
+
+
+    sequence1 = sequence1.upper()
+    sequence2 = sequence2.upper()
+
+    print("Next, let's insert the maximum no. of shifts you would want the sequences to have.")
+    print('')
+
+    max_shift = -1
+    min_length = min(len(sequence1), len(sequence2))
+
+    while max_shift < 0:
+        try:
+            max_shift = int(input("Enter a positive number as the maximum shift or enter 0 for auto adjustment (= length of smallest sequence): "))
+            if max_shift < 0:
+                print('Max shift count must be non-negative!')
+            elif max_shift == 0 or max_shift > min_length:
+                max_shift = min_length
+                print(f'Max shift is auto adjusted to {max_shift}')
+            else: 
+                print(f'Max shift is set to {max_shift}')
+        except ValueError:
+            print('Max shift count must be an integer number!')       
+    print('')
 
     return max_shift, sequence1, sequence2
 
@@ -183,7 +203,7 @@ def main():
     no_shift_chain = find_match_by_shifting_seq1(sequence_one, sequence_two, max_shift=0, chain=True)
 
     print('')
-    print(f'Highest no. of match without shifting: {no_shift_match}')
+    print(f'Highest no. of matches without shifting: {no_shift_match}')
     print(f'Length of longest contiguous chain without shifting: {no_shift_chain}')
     print('')
 
